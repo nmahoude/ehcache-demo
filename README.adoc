@@ -1,0 +1,59 @@
+ 
+# EHCACHE - Decouvertes
+
+pour tester l'appli springboot :
+   "curl http://localhost:8081/hello"
+
+
+## ehcache 3.X
+* ok, reconnu par spring via l'api JCache (JSR-107)
+* pom.xml avec dep jsr107 (JCache : cache api) + implementation ehcache (ne marche pas avec simplement l'implem)
+____
+    <dependency>
+      <groupId>javax.cache</groupId>
+      <artifactId>cache-api</artifactId>
+      <version>1.1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.ehcache</groupId>
+      <artifactId>ehcache</artifactId>
+      <version>3.6.2</version>
+    </dependency>
+____
+* application.properties avec le lien vers le fichier de config
+____
+spring.cache.jcache.config=classpath:ehcache-3.xml
+____
+* fichier de config ehcache-3.xml au formalisme 3.x
+____
+<config ..../>
+____
+
+
+## ehcache 2.10.6
+* pom.xml
+
+* Reconnu par Spring en tant que ehcache 2.x (/!\ pas JCache)
+____
+  <dependency>
+    <groupId>net.sf.ehcache</groupId>
+    <artifactId>ehcache</artifactId>
+    <version>2.10.6</version>
+  </dependency>
+____
+
+* creer un fichier ehcache.xml
+* configuer le cache dans le fichier, on ne peut pas juste utiliser le defaultCache, il faut nommer chaque cache.
+____
+  <cache name="myCache"
+     maxEntriesLocalHeap="10000" 
+     eternal="false" 
+     timeToIdleSeconds="120" 
+     timeToLiveSeconds="120" 
+     maxEntriesLocalDisk="10000000" 
+     diskExpiryThreadIntervalSeconds="120" 
+     memoryStoreEvictionPolicy="LRU"> 
+     <persistence strategy="localTempSwap"/>
+  </cache>
+____
+* Pour la config du cache, voir http://www.ehcache.org/ehcache.xml
