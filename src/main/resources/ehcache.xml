@@ -1,5 +1,12 @@
-<ehcache  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="ehcache.xsd" updateCheck="true" monitoring="autodetect" dynamicConfig="true">
+<ehcache  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="ehcache.xsd" 
+    updateCheck="false" 
+    monitoring="autodetect" 
+    dynamicConfig="true">
 
+     <cacheManagerEventListenerFactory class="org.nmx.ehcache.demo.infrastructure.MyCacheManagerEventListener" />
+     
 <defaultCache 
      maxEntriesLocalHeap="10000" 
      eternal="false" 
@@ -14,11 +21,12 @@
   <cache name="myCache"
      maxEntriesLocalHeap="10000" 
      eternal="false" 
-     timeToIdleSeconds="120" 
-     timeToLiveSeconds="120" 
+     timeToIdleSeconds="5" 
+     timeToLiveSeconds="5" 
      maxEntriesLocalDisk="10000000" 
      diskExpiryThreadIntervalSeconds="120" 
      memoryStoreEvictionPolicy="LRU"> 
      <persistence strategy="localTempSwap"/>
+     
   </cache>
 </ehcache>
